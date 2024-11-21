@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitMed Analytics - Solutions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>FitMed Analytics</h1>
+        <div class="navigation">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('about') }}">About Us</a>
+            <a href="{{ url_for('solutions') }}">Solutions</a>
+            <a href="{{ url_for('contact') }}">Contact Us</a>
+        </div>
+    </header>
+
+    <section class="content-section">
+        <!-- DISEASE -->
+
+        <div class="solution-card">
+            <h1>Predictive Health Insights</h1>
+            <p>Predict patient risks and outcomes to enable early intervention and proactive care.</p>
+
+            <button onclick="toggleSymptomForm()">Show Symptom Input Form</button>
+
+            <div class="symptom-input-section" id="symptomInputSection" style="display: none; margin-top: 20px;">
+                <h3>Disease Prediction</h3>
+
+                <div id="predictionResultSection" style="margin-top: 20px;">
+                    <h4>Predicted Disease:</h4>
+                    <p id="predictionResult">Your predicted disease will be shown here after form submission.</p>
+                </div><br>
+
+                <p>Select the symptoms you are experiencing:</p>
+
+                <form id="symptomForm">
+                    <div class="symptomQuestion">
+                        <div class="fever">
+                            <label><b>Fever?</b></label>
+                            <label><input type="radio" name="Fever" value="Yes"> Yes</label>
+                            <label><input type="radio" name="Fever" value="No"> No</label>
+                        </div>
+
+                        <div class="cough">
+                            <label><b>Cough?</b></label>
+                            <label><input type="radio" name="Cough" value="Yes"> Yes</label>
+                            <label><input type="radio" name="Cough" value="No"> No</label>
+                        </div>
+
+                        <div class="fatigue">
+                            <label><b>Fatigue?</b></label>
+                            <label><input type="radio" name="Fatigue" value="Yes"> Yes</label>
+                            <label><input type="radio" name="Fatigue" value="No"> No</label>
+                        </div>
+
+                        <div class="dif">
+                            <label><b>Difficulty Breathing?</b></label>
+                            <label><input type="radio" name="Difficulty" value="Yes"> Yes</label>
+                            <label><input type="radio" name="Difficulty" value="No"> No</label>
+                        </div>
+                    </div>
+
+                    <h4>Additional Information</h4>
+                    <div class="addtionalInfo">
+                        <div class="ageinfo">
+                            <input type="" id="Age" name="Age" placeholder="Age" required>
+                        </div>
+
+                        <div class="genderInfo">
+                            <label for="Gender">Gender:</label>
+                            <select id="Gender" name="Gender" required>
+                                <option value="1">Male</option>
+                                <option value="0">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="bpInfo">
+                            <label for="BloodPressure">Blood Pressure:</label>
+                            <select id="BloodPressure" name="BloodPressure" required>
+                                <option value="Low">Low</option>
+                                <option value="Normal">Normal</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+
+                        <div class="choInfo">
+                            <label for="Cholesterol">Cholesterol Level:</label>
+                            <select id="Cholesterol" name="Cholesterol" required>
+                                <option value="Low">Low</option>
+                                <option value="Normal">Normal</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit">Predict Disease</button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- TREATMENT -->
+
+
+        <div class="solution-card">
+            <h1>Personalized Treatment Plans</h1>
+            <p>Tailor treatment options using machine learning to optimize patient outcomes.</p>
+            <button onclick="toggleTreatmentForm()">Show Treatment Input Form</button>
+            <div class="treatment-input-section" id="treatmentInputSection" style="display: none; margin-top: 20px;">
+                <h3>Personalized Treatment Recommendation</h3>
+                <p>Select the conditions or medications the patient is experiencing:</p>
+                <form id="diseaseForm">  
+                    <label for="disease">Enter Disease:</label>  
+                    <input type="text" id="disease" name="disease" placeholder="Disease Name" required>  
+                    <button type="submit">Get Medications</button>  
+                    <p id="result"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 FitMed Analytics. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to toggle the visibility of the symptom input form
+        function toggleSymptomForm() {
+            const formSection = document.getElementById("symptomInputSection");
+            formSection.style.display = formSection.style.display === "none" ? "block" : "none";
+        }
+
+        function toggleTreatmentForm() {
+            const formSection = document.getElementById("treatmentInputSection");
+            formSection.style.display = formSection.style.display === "none" ? "block" : "none";
+            document.getElementById("symptomInputSection").style.display = "none";
+        }
+
+        // Submit the form using AJAX to prevent page reload
+        $('#symptomForm').on('submit', function (event) {
+            event.preventDefault(); // Prevent form from submitting the traditional way
+
+            $.ajax({
+                type: 'POST',
+                url: '/predict_disease',  // Ensure this is the correct route in your Flask app
+                data: $(this).serialize(),  // Send form data
+                success: function (response) {
+                    if (response.prediction) {
+                        $('#predictionResult').text('Predicted Disease: ' + response.prediction);
+                    } else if (response.error) {
+                        $('#predictionResult').text('Error: ' + response.error);
+                    }
+                },
+                error: function () {
+                    $('#predictionResult').text('Error in prediction. Please try again.');
+                }
+            });
+        });
+
+        document.getElementById('diseaseForm').onsubmit = async (e) => {  
+            e.preventDefault();  
+            const disease = document.getElementById('disease').value;  
+
+            const response = await fetch('/get_medications', {  
+                method: 'POST',  
+                headers: {  
+                    'Content-Type': 'application/x-www-form-urlencoded',  
+                },  
+                body: new URLSearchParams({ disease })  
+            });  
+
+            const data = await response.json();  
+            document.getElementById('result').innerText = data.medications;  
+        };
+    </script>
+
+</body>
+
+</html>

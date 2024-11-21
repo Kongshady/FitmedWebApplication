@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    font-family: "Poppins", serif;
+}
+
+header{
+    background-color: darkblue;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+header h1{
+    color: white;
+    user-select: none;
+}
+.navigation{
+    color: white;
+    display: flex;
+    gap: 3rem;
+}
+.navigation a{
+    color: white;
+}
+.navigation a:hover{
+    text-decoration: underline;
+}
+
+.aboutUsHero{
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.about-text{
+    text-align: center;
+    width: 7in;
+}
+.about-text h1{
+    color: darkblue;
+    font-size: 60px;
+}
+
+
+.hero{
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    background: url("/images/home_bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+.hero h1{
+    font-size: 3rem;
+    color: darkblue;
+}
+.hero a{
+    padding: 10px;
+    background-color: darkblue;
+    border-radius: 5px;
+    color: white;
+    transition: .3s ease;
+}
+.hero a:hover{
+    border: 2px solid darkblue;
+    background-color: transparent;
+    color: darkblue;
+    font-weight: bold;
+    transform: translateY(-5px);
+    padding: 13px;
+}
+
+footer{
+    background-color: darkblue;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.content-section{
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+.symptom-input-section{
+    background-color: rgb(245, 245, 245);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.solution-card{
+    background-color: rgba(248, 248, 248, 0.863);
+    padding: 2rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.solution-card h1{
+    font-size: 38px;
+    color: darkblue;
+}
+.solution-card button{
+    background-color: darkblue;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    margin: 10px 0;
+    transition: .3s ease-in;
+}
+.solution-card button:hover{
+    padding: 15px;
+}
+#predictionResult{
+    padding: 1rem;
+    background-color: white;
+    color: darkblue;
+    border: 1px solid darkblue;
+    border-radius: 10px;
+}
+.title h3{
+    color: darkblue;
+}
+
+form{
+    width: 500px;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+form h1{
+    color: darkblue;
+    font-size: 40px;
+}
+form input{
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background-color: hsl(0, 0%, 95%);
+}
+form textarea{
+    padding: 10px;
+    border: none;
+    background-color: hsl(0, 0%, 95%);
+    resize: none;
+    border-radius: 4px;
+}
+form input:focus{
+    color: darkblue;
+    border-color: none;
+}
+form button[type=submit]{
+    padding: 15px;
+    border: none;
+    background-color: darkblue;
+    color: white;
+    border-radius: 4px;
+}
+.contact-card{
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+}
+form button{
+    cursor: pointer;
+}
+
+.solution-section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100svh;
+    gap: 1rem;
+}
+
+#Age{
+    background-color: white;
+}
+#Age:focus{
+    border-color: transparent;
+    color: darkblue;
+}
+#symptomForm{
+    display: flex;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+}
+.symptomQuestion{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1rem;
+    width: 100%;
+}
+.inclose-btn{
+    padding: 5px;
+    background-color: white;
+    border-radius: 5px;
+    flex: 1;
+}
+.fever{
+    background-color: white;
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.cough{
+    background-color: white;
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.fatigue{
+    background-color: white;
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.dif{
+    background-color: white;
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.additionalInfo{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.genderInfo{
+    display: flex;
+    flex-direction: column;
+}
+.bpInfo{
+    display: flex;
+    flex-direction: column;
+}
+.choInfo{
+    display: flex;
+    flex-direction: column;
+}
+select{
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+}
+#result{
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+}
