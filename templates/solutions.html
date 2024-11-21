@@ -115,10 +115,10 @@
             <div class="treatment-input-section" id="treatmentInputSection" style="display: none; margin-top: 20px;">
                 <h3>Personalized Treatment Recommendation</h3>
                 <p>Select the conditions or medications the patient is experiencing:</p>
-                <form id="diseaseForm">  
-                    <label for="disease">Enter Disease:</label>  
-                    <input type="text" id="disease" name="disease" placeholder="Disease Name" required>  
-                    <button type="submit">Get Medications</button>  
+                <form id="diseaseForm">
+                    <label for="disease">Enter Disease:</label>
+                    <input type="text" id="disease" name="disease" placeholder="Disease Name" required>
+                    <button type="submit">Get Medications</button>
                     <p id="result"></p>
                 </form>
             </div>
@@ -151,32 +151,39 @@
                 url: '/predict_disease',  // Ensure this is the correct route in your Flask app
                 data: $(this).serialize(),  // Send form data
                 success: function (response) {
-                    if (response.prediction) {
-                        $('#predictionResult').text('Predicted Disease: ' + response.prediction);
-                    } else if (response.error) {
-                        $('#predictionResult').text('Error: ' + response.error);
+                    const resultSection = $('#predictionResult');
+                    resultSection.empty(); // Clear any previous results
+
+                    if (response.error) {
+                        resultSection.append(`<li>Error: ${response.error}</li>`);
+                    } else {
+                        for (const [model, data] of Object.entries(response)) {
+                            const disease = data.Disease;
+                            const probability = (data.Probability * 100).toFixed(2);
+                            resultSection.append(`<li>${model} predicted <b>${disease}</b> with a probability of <b>${probability}%</b>.</li>`);
+                        }
                     }
                 },
                 error: function () {
-                    $('#predictionResult').text('Error in prediction. Please try again.');
+                    $('#predictionResult').html('<li>Error in prediction. Please try again.</li>');
                 }
             });
         });
 
-        document.getElementById('diseaseForm').onsubmit = async (e) => {  
-            e.preventDefault();  
-            const disease = document.getElementById('disease').value;  
+        document.getElementById('diseaseForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const disease = document.getElementById('disease').value;
 
-            const response = await fetch('/get_medications', {  
-                method: 'POST',  
-                headers: {  
-                    'Content-Type': 'application/x-www-form-urlencoded',  
-                },  
-                body: new URLSearchParams({ disease })  
-            });  
+            const response = await fetch('/get_medications', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ disease })
+            });
 
-            const data = await response.json();  
-            document.getElementById('result').innerText = data.medications;  
+            const data = await response.json();
+            document.getElementById('result').innerText = data.medications;
         };
     </script>
 
